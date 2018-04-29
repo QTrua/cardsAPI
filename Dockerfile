@@ -1,7 +1,10 @@
+# use official long-term support docker container for jenkins
 FROM jenkins/jenkins:lts
 
+# switch to root
 USER root
 
+# install SoapUI version 5.4.0
 RUN apt-get update && mkdir -p /opt &&\
     curl  https://s3.amazonaws.com/downloads.eviware/soapuios/5.4.0/SoapUI-5.4.0-linux-bin.tar.gz \
     | gunzip -c - | tar -xf - -C /opt && \
@@ -10,10 +13,13 @@ RUN apt-get update && mkdir -p /opt &&\
 # drop back to regular jenkins user - good practice
 USER jenkins
 
+# no install wizard on Jenkins first run
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
+# copy security information to the container
 COPY security.groovy /usr/share/jenkins/ref/init.groovy.d/security.groovy
 
+# install required plugins
 RUN /usr/local/bin/install-plugins.sh \
 job-dsl \
 script-security:1.44 \
@@ -87,5 +93,3 @@ matrix-auth:2.2 \
 pam-auth:1.3 \
 ldap:1.20 \
 email-ext:2.62
-
-
