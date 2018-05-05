@@ -15,7 +15,7 @@ If needed, explicit volumes for storing your data can be defined in jenkins.yml 
 
 # Setting the environment
 
-Login to your machine as root. All scripts below asume that you're executing them as root user.
+Login to your machine as root user. All scripts below asume that you're executing them as root user.
 
 Checkout this repo to your local folder. Then execute:
 
